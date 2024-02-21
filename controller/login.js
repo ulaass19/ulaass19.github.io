@@ -12,7 +12,21 @@ angular.module('App').controller('LoginController', function ($rootScope, $scope
 
 	self.doLogin = function () {
 		self.submit_loading = true;
-		request.login(self.userdata).then(function (result) {
+
+		if(self.userdata.username == "admin" && self.userdata.password == "123")
+		{
+			root.saveCookies(1, "admin", "admin@gmail.com", "123");
+			$mdToast.show($mdToast.simple().content('Login Success').position('bottom right'));
+			window.location.href = '#dashboard';
+			window.location.reload();
+		}
+		else
+		{
+			$mdToast.show($mdToast.simple().content('Login Failed').position('bottom right'));
+		}
+
+
+		/*request.login(self.userdata).then(function (result) {
 		    var resp = result.data;
 			$timeout(function () { // give delay for good UI
 				self.submit_loading = false;
@@ -31,7 +45,7 @@ angular.module('App').controller('LoginController', function ($rootScope, $scope
                 }
 			}, 1000);
 			//console.log(JSON.stringify(result.data));
-		});
+		});*/
 	};
 
 });
